@@ -20,7 +20,7 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
     1. Interface
     2. Schema
     3. Model
-    4. Database Query
+    4. Database Query on model
     */
 
     // res.send('Hello Mongoose!');
@@ -55,7 +55,6 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
         role: {
             type: String,
             required: true,
-            unique: true
         },
         password: {
             type: String,
@@ -102,6 +101,33 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
             required: true
         },
       });
+
+    //   create model
+    const User = model<IUser>('User', userSchema);
+
+    const createUserToDB = async () => {
+        const user = new User({
+            id: "898",
+            role: "student",
+            password: "58498",
+            name: {
+                firstName: "Md",
+                middleName: "Shadab",
+                lastName: "Hamid",
+            },
+            dateOfBirth: "5/4/1988",
+            gender: "male",
+            email: "shadab@hamid.com",
+            contactNo: "015438905",
+            emergencyContact: "0184389709",
+            presentAddress: "23/A ghosh road",
+            permanentAddress: "33/C das road uganda",
+          });
+          await user.save();
+          console.log(user);
+    };
+
+    createUserToDB();
   });
 
   export default app;
